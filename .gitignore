@@ -32,4 +32,27 @@ build/
 ### VS Code ###
 .vscode/
 
+# Environment files
 .env
+.env.local
+.env.*.local
+
+# Application properties with sensitive data
+src/main/resources/application-local.properties
+src/main/resources/application-prod.properties
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.sublime-*
+
+# Build files
+target/
+build/
+out/
+*.class
+
+# Logs
+*.log
+logs/
