@@ -1,3 +1,9 @@
 Manifest-Version: 1.0
 Main-Class: edu.cit.AssessMate.AssessMateApplication
-Class-Path: .
+Start-Class: edu.cit.AssessMate.AssessMateApplication
+Spring-Boot-Version: 2.5.0
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+Build-Jdk-Spec: 11
+Created-By: Maven JAR Plugin
+Class-Path: . lib/* BOOT-INF/lib/*
