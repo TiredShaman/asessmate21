@@ -670,7 +670,8 @@ public class TeacherController {
 
     @PutMapping("/quizzes/{quizId}/questions/{questionId}")
     @PreAuthorize("hasRole('ROLE_TEACHER')")
-    public ResponseEntity<?> updateQuizQuestion(@PathVariable Long quizId, @PathVariable Long questionId, @Valid @RequestBody QuestionRequest questionRequest) {
+    public ResponseEntity<?> updateQuizQuestion(@PathVariable Long quizId, @PathVariable Long questionId, 
+            @Valid @RequestBody QuestionRequest questionRequest) {
         try {
             logger.info("Attempting to update question ID: {} for quiz ID: {}", questionId, quizId);
             UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -704,11 +705,9 @@ public class TeacherController {
                         .body(new MessageResponse("Question does not belong to this quiz"));
             }
 
-            question.setText(questionRequest.getText());
-            question.setOptions(questionRequest.getOptions());
-            question.setCorrectAnswer(questionRequest.getCorrectAnswer());
+            question.setQuestion(questionRequest.getQuestionText());
             question.setPoints(questionRequest.getPoints());
-            quizQuestionRepository.save(question);
+            question = quizQuestionRepository.save(question);
 
             logger.info("Question {} updated successfully for quiz ID: {}", questionId, quizId);
             return ResponseEntity.ok(new MessageResponse("Question updated successfully!"));
