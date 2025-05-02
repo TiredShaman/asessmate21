@@ -1,9 +1,6 @@
 package edu.cit.AssessMate.Config;
 
-import edu.cit.AssessMate.Model.ERole;
-import edu.cit.AssessMate.Model.Role;
 import edu.cit.AssessMate.Model.User;
-import edu.cit.AssessMate.Repository.RoleRepository;
 import edu.cit.AssessMate.Repository.UserRepository;
 import edu.cit.AssessMate.Service.impl.UserDetailsImpl;
 import edu.cit.AssessMate.security.JwtUtils;
@@ -24,7 +21,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+
 
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {

@@ -1,6 +1,5 @@
 package edu.cit.AssessMate.Controller;
 
-import org.springframework.security.core.Authentication;
 import edu.cit.AssessMate.Model.*;
 import edu.cit.AssessMate.payload.response.QuestionDTO;
 import edu.cit.AssessMate.payload.request.AnswerSubmissionRequest;
@@ -26,8 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

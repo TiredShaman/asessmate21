@@ -1,13 +1,6 @@
 package edu.cit.AssessMate.Controller;
 
-import edu.cit.AssessMate.Model.Answer;
-import edu.cit.AssessMate.Model.Course;
-import edu.cit.AssessMate.Model.Question;
-import edu.cit.AssessMate.Model.QuestionOption;
-import edu.cit.AssessMate.Model.Quiz;
-import edu.cit.AssessMate.Model.QuizSubmission;
-import edu.cit.AssessMate.Model.User;
-import edu.cit.AssessMate.Model.QuizQuestion;
+import edu.cit.AssessMate.Model.*;
 import edu.cit.AssessMate.payload.request.AnswerFeedback;
 import edu.cit.AssessMate.payload.request.CourseRequest;
 import edu.cit.AssessMate.payload.request.EnrollStudentRequest;
@@ -42,7 +35,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173", maxAge = 3600, allowCredentials = "true")
 @RestController

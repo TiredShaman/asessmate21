@@ -21,5 +21,19 @@ public class QuestionRequest {
         return points;
     }
     
+    private String text;
+    private String correctAnswer;
     private List<QuestionOptionRequest> options;
+
+    public String getText() {
+        return text;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public List<QuestionOptionRequest> getOptions() {
+        return options;
+    }
 }
