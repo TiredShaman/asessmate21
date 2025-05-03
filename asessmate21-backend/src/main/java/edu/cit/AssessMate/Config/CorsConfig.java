@@ -18,6 +18,7 @@ public class CorsConfig {
 
         // ** THIS MUST MATCH YOUR FRONTEND'S EXACT ORIGIN **
         config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app");
         // Add other origins if needed, e.g., config.addAllowedOrigin("http://localhost:3000");
 
         config.addAllowedHeader("*"); // Allow all headers
