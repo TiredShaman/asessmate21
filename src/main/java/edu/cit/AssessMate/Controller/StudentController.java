@@ -31,8 +31,10 @@ import java.util.stream.Collectors;
         "http://localhost:3000",
         "https://assessmate-j21k.onrender.com"
     },
+    maxAge = 3600,
     allowCredentials = "true",
-    maxAge = 3600
+    allowedHeaders = {"Content-Type", "Authorization", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"},
+    exposedHeaders = {"Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"}
 )
 @RestController
 @RequestMapping("/api/students")

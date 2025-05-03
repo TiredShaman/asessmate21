@@ -70,9 +70,19 @@ public class SecurityConfig {
             "https://assessmate-j21k.onrender.com"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", 
-            "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization", "Access-Control-Allow-Origin"));
+        configuration.setAllowedHeaders(Arrays.asList(
+            "Content-Type", 
+            "Authorization", 
+            "X-Requested-With", 
+            "accept", 
+            "Origin", 
+            "Access-Control-Request-Method",
+            "Access-Control-Request-Headers"
+        ));
+        configuration.setExposedHeaders(Arrays.asList(
+            "Access-Control-Allow-Origin", 
+            "Access-Control-Allow-Credentials"
+        ));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 

@@ -23,14 +23,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                 .allowedHeaders("*")
-                .exposedHeaders(
-                    "Authorization",
-                    "Access-Control-Allow-Origin",
-                    "Access-Control-Allow-Credentials",
-                    "Access-Control-Allow-Headers",
-                    "Access-Control-Allow-Methods",
-                    "Access-Control-Max-Age"
-                )
+                .exposedHeaders("Authorization")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
@@ -40,31 +33,15 @@ public class CorsConfig implements WebMvcConfigurer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         
-        // Configure allowed origins explicitly
         config.setAllowedOrigins(Arrays.asList(
             "https://assessmatefinal-6cog.vercel.app",
-            "http://localhost:3000",
+            "http://localhost:3000", 
             "https://assessmate-j21k.onrender.com"
         ));
-        
-        // Allow credentials
         config.setAllowCredentials(true);
-        
-        // Configure other CORS parameters
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
-        
-        // Set exposed headers
-        config.setExposedHeaders(Arrays.asList(
-            "Authorization",
-            "Access-Control-Allow-Origin",
-            "Access-Control-Allow-Credentials",
-            "Access-Control-Allow-Headers",
-            "Access-Control-Allow-Methods",
-            "Access-Control-Max-Age"
-        ));
-        
-        // Set max age for preflight caching
+        config.setExposedHeaders(Arrays.asList("Authorization"));
         config.setMaxAge(3600L);
         
         source.registerCorsConfiguration("/**", config);
