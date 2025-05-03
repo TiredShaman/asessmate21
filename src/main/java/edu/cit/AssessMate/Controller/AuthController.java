@@ -35,7 +35,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "https://assessmatefinal-6cog.vercel.app", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = {"https://assessmatefinal-6cog.vercel.app", "http://localhost:3000"}, 
+    maxAge = 3600, 
+    allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
