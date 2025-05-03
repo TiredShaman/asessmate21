@@ -15,7 +15,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow credentials
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(false);
 
         // Allow only deployed frontend
         config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app");
