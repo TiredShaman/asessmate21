@@ -10,7 +10,11 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://assessmatefinal-6cog.vercel.app", "http://localhost:3000")
+                .allowedOrigins(
+                    "https://assessmatefinal-6cog.vercel.app",
+                    "http://localhost:3000",
+                    "https://assessmate-j21k.onrender.com"
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("Origin", "Content-Type", "Accept", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers")
                 .exposedHeaders("Authorization", "Access-Control-Allow-Origin")

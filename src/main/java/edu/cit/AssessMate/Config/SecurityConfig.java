@@ -64,7 +64,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://assessmatefinal-6cog.vercel.app", "http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(
+            "https://assessmatefinal-6cog.vercel.app",
+            "http://localhost:3000",
+            "https://assessmate-j21k.onrender.com"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", 
             "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"));
