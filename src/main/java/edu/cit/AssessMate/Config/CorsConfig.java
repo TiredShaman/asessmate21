@@ -8,6 +8,8 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
@@ -16,14 +18,13 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                     "https://assessmatefinal-6cog.vercel.app",
-                    "http://localhost:3000", 
-                    "https://assessmate-j21k.onrender.com",
-                    "https://assessmatefinal-6cog.vercel.app/"
+                    "http://localhost:3000",
+                    "https://assessmate-j21k.onrender.com"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                 .allowedHeaders("*")
                 .exposedHeaders(
-                    "Authorization", 
+                    "Authorization",
                     "Access-Control-Allow-Origin",
                     "Access-Control-Allow-Credentials",
                     "Access-Control-Allow-Headers",
@@ -34,37 +35,39 @@ public class CorsConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
-    @Bean
+    @Bean 
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-
-        // Allow specified origins
-        config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app");
-        config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("https://assessmate-j21k.onrender.com"); 
-        config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app/");
         
-        // Allow credentials and cookies
+        // Configure allowed origins explicitly
+        config.setAllowedOrigins(Arrays.asList(
+            "https://assessmatefinal-6cog.vercel.app",
+            "http://localhost:3000",
+            "https://assessmate-j21k.onrender.com"
+        ));
+        
+        // Allow credentials
         config.setAllowCredentials(true);
         
-        // Allow all headers and methods
-        config.addAllowedHeader("*");
+        // Configure other CORS parameters
         config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
         
-        // Expose all necessary headers
-        config.addExposedHeader("Authorization");
-        config.addExposedHeader("Access-Control-Allow-Origin");
-        config.addExposedHeader("Access-Control-Allow-Credentials");
-        config.addExposedHeader("Access-Control-Allow-Headers");
-        config.addExposedHeader("Access-Control-Allow-Methods");
-        config.addExposedHeader("Access-Control-Max-Age");
+        // Set exposed headers
+        config.setExposedHeaders(Arrays.asList(
+            "Authorization",
+            "Access-Control-Allow-Origin",
+            "Access-Control-Allow-Credentials",
+            "Access-Control-Allow-Headers",
+            "Access-Control-Allow-Methods",
+            "Access-Control-Max-Age"
+        ));
         
-        // Set longer max age for preflight caching
-        config.setMaxAge(7200L);
-
-        source.registerCorsConfiguration("/api/students/**", config);
-        source.registerCorsConfiguration("/api/auth/**", config);
+        // Set max age for preflight caching
+        config.setMaxAge(3600L);
+        
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }
