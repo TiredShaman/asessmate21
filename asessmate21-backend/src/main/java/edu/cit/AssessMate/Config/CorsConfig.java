@@ -14,25 +14,27 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
-
-        // ** THIS MUST MATCH YOUR FRONTEND'S EXACT ORIGIN **
-        config.addAllowedOrigin("http://localhost:5173");
+        // Allow credentials
+        config.setAllowCredentials(false);
+        
+        // Allow only deployed frontend
         config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app");
-        // Add other origins if needed, e.g., config.addAllowedOrigin("http://localhost:3000");
-
-        config.addAllowedHeader("*"); // Allow all headers
-        config.addExposedHeader("Authorization"); // Expose Authorization header
+        
+        // Allow all headers and expose Authorization
+        config.addAllowedHeader("*");
+        config.addExposedHeader("Authorization");
+        
+        // Allow all common HTTP methods
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("OPTIONS"); // Crucial for preflight requests
-
+        config.addAllowedMethod("OPTIONS");
+        
+        // Cache CORS config for 1 hour
         config.setMaxAge(3600L);
 
-        source.registerCorsConfiguration("/**", config); // Apply to all paths
-
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }
