@@ -16,13 +16,20 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                     "https://assessmatefinal-6cog.vercel.app",
-                    "http://localhost:3000",
+                    "http://localhost:3000", 
                     "https://assessmate-j21k.onrender.com",
                     "https://assessmatefinal-6cog.vercel.app/"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                 .allowedHeaders("*")
-                .exposedHeaders("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                .exposedHeaders(
+                    "Authorization", 
+                    "Access-Control-Allow-Origin",
+                    "Access-Control-Allow-Credentials",
+                    "Access-Control-Allow-Headers",
+                    "Access-Control-Allow-Methods",
+                    "Access-Control-Max-Age"
+                )
                 .allowCredentials(true)
                 .maxAge(3600);
     }
@@ -31,31 +38,33 @@ public class CorsConfig implements WebMvcConfigurer {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        
-        // Allow all specified origins
+
+        // Allow specified origins
         config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app");
         config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("https://assessmate-j21k.onrender.com");
+        config.addAllowedOrigin("https://assessmate-j21k.onrender.com"); 
         config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app/");
         
-        // Allow credentials
+        // Allow credentials and cookies
         config.setAllowCredentials(true);
         
-        // Allow all headers
+        // Allow all headers and methods
         config.addAllowedHeader("*");
-        
-        // Allow all methods
         config.addAllowedMethod("*");
         
-        // Expose headers that might be needed by the client
+        // Expose all necessary headers
         config.addExposedHeader("Authorization");
         config.addExposedHeader("Access-Control-Allow-Origin");
         config.addExposedHeader("Access-Control-Allow-Credentials");
+        config.addExposedHeader("Access-Control-Allow-Headers");
+        config.addExposedHeader("Access-Control-Allow-Methods");
+        config.addExposedHeader("Access-Control-Max-Age");
         
-        // Set max age
-        config.setMaxAge(3600L);
-        
-        source.registerCorsConfiguration("/**", config);
+        // Set longer max age for preflight caching
+        config.setMaxAge(7200L);
+
+        source.registerCorsConfiguration("/api/students/**", config);
+        source.registerCorsConfiguration("/api/auth/**", config);
         return new CorsFilter(source);
     }
 }

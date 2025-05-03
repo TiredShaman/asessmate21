@@ -27,7 +27,11 @@ import java.util.stream.Collectors;
 
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = {
+    "https://assessmatefinal-6cog.vercel.app",
+    "http://localhost:3000",
+    "https://assessmate-j21k.onrender.com"
+}, allowCredentials = "true", maxAge = 3600)
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
