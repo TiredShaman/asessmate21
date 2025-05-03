@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "https://assessmatefinal-6cog.vercel.app", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/teachers")
 @RequiredArgsConstructor
@@ -662,7 +662,7 @@ public class TeacherController {
 
     @PutMapping("/quizzes/{quizId}/questions/{questionId}")
     @PreAuthorize("hasRole('ROLE_TEACHER')")
-    public ResponseEntity<?> updateQuizQuestion(@PathVariable Long quizId, @PathVariable Long questionId, 
+    public ResponseEntity<?> updateQuizQuestion(@PathVariable Long quizId, @PathVariable Long questionId,
             @Valid @RequestBody QuestionRequest questionRequest) {
         try {
             logger.info("Attempting to update question ID: {} for quiz ID: {}", questionId, quizId);

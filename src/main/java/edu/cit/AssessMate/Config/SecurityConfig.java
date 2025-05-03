@@ -33,10 +33,10 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2SuccessHandler oauth2SuccessHandler;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, 
-                         JwtAuthenticationEntryPoint unauthorizedHandler, 
-                         JwtAuthenticationFilter jwtAuthenticationFilter,
-                         @Lazy OAuth2SuccessHandler oauth2SuccessHandler) { // Add @Lazy here
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService,
+                          JwtAuthenticationEntryPoint unauthorizedHandler,
+                          JwtAuthenticationFilter jwtAuthenticationFilter,
+                          @Lazy OAuth2SuccessHandler oauth2SuccessHandler) { // Add @Lazy here
         this.userDetailsService = userDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -64,7 +64,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("        config.addAllowedOrigin(\"https://assessmatefinal-6cog.vercel.app\");\r\n" + //
+                ""));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
@@ -86,33 +87,33 @@ public class SecurityConfig {
     }
 
     @Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(csrf -> csrf.disable())
-        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/auth/**").permitAll()
-            .requestMatchers("/api/test/**").permitAll()
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .requestMatchers("/api/students/**").hasAuthority("ROLE_STUDENT")
-            .requestMatchers("/api/teachers/**").hasAuthority("ROLE_TEACHER")
-            .requestMatchers("/api/auth/set-role").authenticated()
-            .requestMatchers("/error").permitAll()
-            .requestMatchers("/oauth2/authorization/**").permitAll()
-            .requestMatchers("/api/auth/oauth2/callback/**").permitAll()
-            .requestMatchers("/favicon.ico").permitAll()
-            .anyRequest().authenticated()
-        )
-        .oauth2Login(oauth2 -> oauth2
-            .successHandler(oauth2SuccessHandler)
-            .authorizationEndpoint(authz -> authz.baseUri("/oauth2/authorization"))
-            .redirectionEndpoint(redir -> redir.baseUri("/api/auth/oauth2/callback/*"))
-        )
-        .authenticationProvider(authenticationProvider())
-        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/test/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/students/**").hasAuthority("ROLE_STUDENT")
+                        .requestMatchers("/api/teachers/**").hasAuthority("ROLE_TEACHER")
+                        .requestMatchers("/api/auth/set-role").authenticated()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/oauth2/authorization/**").permitAll()
+                        .requestMatchers("/api/auth/oauth2/callback/**").permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(oauth2SuccessHandler)
+                        .authorizationEndpoint(authz -> authz.baseUri("/oauth2/authorization"))
+                        .redirectionEndpoint(redir -> redir.baseUri("/api/auth/oauth2/callback/*"))
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-}
+        return http.build();
+    }
 }
