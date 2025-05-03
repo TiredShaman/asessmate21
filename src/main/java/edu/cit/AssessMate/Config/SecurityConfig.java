@@ -62,34 +62,39 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(
-            "https://assessmatefinal-6cog.vercel.app",
-            "http://localhost:3000",
-            "https://assessmate-j21k.onrender.com"
-        ));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList(
-            "Content-Type", 
-            "Authorization", 
-            "X-Requested-With", 
-            "accept", 
-            "Origin", 
-            "Access-Control-Request-Method",
-            "Access-Control-Request-Headers"
-        ));
-        configuration.setExposedHeaders(Arrays.asList(
-            "Access-Control-Allow-Origin", 
-            "Access-Control-Allow-Credentials"
-        ));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList(
+        "https://assessmatefinal-6cog.vercel.app",
+        "http://localhost:3000",
+        "https://assessmate-j21k.onrender.com"
+    ));
+    configuration.setAllowedMethods(Arrays.asList(
+        "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"
+    ));
+    configuration.setAllowedHeaders(Arrays.asList(
+        "Content-Type", 
+        "Authorization", 
+        "X-Requested-With", 
+        "accept", 
+        "Origin", 
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials"
+    ));
+    configuration.setExposedHeaders(Arrays.asList(
+        "Access-Control-Allow-Origin", 
+        "Access-Control-Allow-Credentials",
+        "Authorization"
+    ));
+    configuration.setAllowCredentials(true);
+    configuration.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
 
     // Register the Cross-Origin-Opener-Policy filter
     @Bean
@@ -102,25 +107,32 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/test/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/students/**").hasAuthority("ROLE_STUDENT")
-                        .requestMatchers("/api/teachers/**").hasAuthority("ROLE_TEACHER")
-                        .requestMatchers("/api/auth/set-role").authenticated()
-                        .requestMatchers("/error").permitAll()
-                        .requestMatchers("/oauth2/authorization/**").permitAll()
-                        .requestMatchers("/api/auth/oauth2/callback/**").permitAll()
-                        .requestMatchers("/favicon.ico").permitAll()
-                        .anyRequest().authenticated()
-                )
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> csrf.disable())
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/api/test/**").permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    // Updated student endpoints with more specific patterns
+                    .requestMatchers(
+                        "/api/students/courses",
+                        "/api/students/courses/**",
+                        "/api/students/submissions",
+                        "/api/students/submissions/**",
+                        "/api/students/quizzes/**"
+                    ).hasAuthority("ROLE_STUDENT")
+                    .requestMatchers("/api/teachers/**").hasAuthority("ROLE_TEACHER")
+                    .requestMatchers("/api/auth/set-role").authenticated()
+                    .requestMatchers("/error").permitAll()
+                    .requestMatchers("/oauth2/authorization/**").permitAll()
+                    .requestMatchers("/api/auth/oauth2/callback/**").permitAll()
+                    .requestMatchers("/favicon.ico").permitAll()
+                    .anyRequest().authenticated()
+            )
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(oauth2SuccessHandler)
                         .authorizationEndpoint(authz -> authz.baseUri("/oauth2/authorization"))
