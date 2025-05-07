@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import java.util.Arrays;
 
 @Configuration
 public class CorsConfig {
@@ -16,21 +17,20 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
-        // ** THIS MUST MATCH YOUR FRONTEND'S EXACT ORIGIN **
-        config.addAllowedOrigin("http://localhost:5173");
-        // Add other origins if needed, e.g., config.addAllowedOrigin("http://localhost:3000");
+        // Explicitly list all allowed origins
+        config.setAllowedOrigins(Arrays.asList(
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "https://assessmatefinal-6cog.vercel.app",
+            "https://assessmate-j21k.onrender.com"
+        ));
 
-        config.addAllowedHeader("*"); // Allow all headers
-        config.addExposedHeader("Authorization"); // Expose Authorization header
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("OPTIONS"); // Crucial for preflight requests
-
+        config.addAllowedHeader("*");
+        config.addExposedHeader("Authorization");
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setMaxAge(3600L);
 
-        source.registerCorsConfiguration("/**", config); // Apply to all paths
+        source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);
     }
