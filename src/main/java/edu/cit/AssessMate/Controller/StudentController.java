@@ -28,7 +28,9 @@ import java.util.stream.Collectors;
 @CrossOrigin(
     origins = {
         "https://assessmatefinal-6cog.vercel.app",
+        "https://assessmatefinal-nvy4-git-main-angelos-projects-1edf35e0.vercel.app",
         "http://localhost:3000",
+        "http://localhost:5173",
         "https://assessmate-j21k.onrender.com"
     },
     maxAge = 3600,

@@ -12,12 +12,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                     "https://assessmatefinal-6cog.vercel.app",
+                    "https://assessmatefinal-nvy4-git-main-angelos-projects-1edf35e0.vercel.app",
                     "http://localhost:3000",
+                    "http://localhost:5173",
                     "https://assessmate-j21k.onrender.com"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                 .allowedHeaders("*")
-                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

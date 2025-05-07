@@ -66,7 +66,9 @@ public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOrigins(Arrays.asList(
         "https://assessmatefinal-6cog.vercel.app",
+        "https://assessmatefinal-nvy4-git-main-angelos-projects-1edf35e0.vercel.app",
         "http://localhost:3000",
+        "http://localhost:5173",
         "https://assessmate-j21k.onrender.com"
     ));
     configuration.setAllowedMethods(Arrays.asList(
@@ -79,14 +81,11 @@ public CorsConfigurationSource corsConfigurationSource() {
         "accept", 
         "Origin", 
         "Access-Control-Request-Method",
-        "Access-Control-Request-Headers",
-        "Access-Control-Allow-Origin",
-        "Access-Control-Allow-Credentials"
+        "Access-Control-Request-Headers"
     ));
     configuration.setExposedHeaders(Arrays.asList(
         "Access-Control-Allow-Origin", 
-        "Access-Control-Allow-Credentials",
-        "Authorization"
+        "Access-Control-Allow-Credentials"
     ));
     configuration.setAllowCredentials(true);
     configuration.setMaxAge(3600L);
