@@ -25,8 +25,9 @@ public class CorsConfig implements WebMvcConfigurer {
                     "https://assessmate-j21k.onrender.com"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
-                .allowedHeaders("*")
-                .exposedHeaders("Authorization")
+                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "accept", "Origin", 
+                              "Access-Control-Request-Method", "Access-Control-Request-Headers")
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

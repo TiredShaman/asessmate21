@@ -25,19 +25,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin(
-    origins = {
-        "https://assessmatefinal-6cog.vercel.app",
-        "https://assessmatefinal-nvy4-git-main-angelos-projects-1edf35e0.vercel.app",
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "https://assessmate-j21k.onrender.com"
-    },
-    maxAge = 3600,
-    allowCredentials = "true",
-    allowedHeaders = {"Content-Type", "Authorization", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"},
-    exposedHeaders = {"Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"}
-)
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
