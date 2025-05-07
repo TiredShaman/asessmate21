@@ -15,10 +15,11 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow credentials
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
         
-        // Allow only deployed frontend
+        // Allow specific origins
         config.addAllowedOrigin("https://assessmatefinal-6cog.vercel.app");
+        config.addAllowedOrigin("http://localhost:3000"); // For local development
         
         // Allow all headers and expose Authorization
         config.addAllowedHeader("*");
