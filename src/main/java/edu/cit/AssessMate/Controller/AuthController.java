@@ -35,7 +35,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = {"https://assessmatefinal-6cog.vercel.app", "http://localhost:3000"}, 
+    maxAge = 3600, 
+    allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -47,8 +49,8 @@ public class AuthController {
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, 
-                         RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
+                          RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -163,13 +165,15 @@ public class AuthController {
             if (authentication == null) {
                 logger.error("Authentication is null in SecurityContextHolder");
                 response.setContentType("text/html");
-                response.getWriter().write("<script>window.opener.location.href='http://localhost:5173/login?error=Authentication+is+null';setTimeout(() => window.close(), 200);</script>");
+                response.getWriter().write("<script>window.opener.location.href='        config.addAllowedOrigin(\"https://assessmatefinal-6cog.vercel.app\");\r\n" + //
+                        "/login?error=Authentication+is+null';setTimeout(() => window.close(), 200);</script>");
                 return;
             }
             if (!(authentication instanceof OAuth2AuthenticationToken)) {
                 logger.error("Authentication is not an OAuth2AuthenticationToken: {}", authentication.getClass().getName());
                 response.setContentType("text/html");
-                response.getWriter().write("<script>window.opener.location.href='http://localhost:5173/login?error=Invalid+token+type';setTimeout(() => window.close(), 200);</script>");
+                response.getWriter().write("<script>window.opener.location.href='        config.addAllowedOrigin(\"https://assessmatefinal-6cog.vercel.app\");\r\n" + //
+                        "/login?error=Invalid+token+type';setTimeout(() => window.close(), 200);</script>");
                 return;
             }
 
@@ -202,15 +206,17 @@ public class AuthController {
 
             response.setContentType("text/html");
             response.getWriter().write(
-                "<script>" +
-                "window.opener.location.href='http://localhost:5173/auth/callback?token=" + jwt + "&needsRoleSelection=" + needsRoleSelection + "';" +
-                "setTimeout(() => window.close(), 200);" +
-                "</script>"
+                    "<script>" +
+                            "window.opener.location.href='        config.addAllowedOrigin(\"https://assessmatefinal-6cog.vercel.app\");\r\n" + //
+                            "/auth/callback?token=" + jwt + "&needsRoleSelection=" + needsRoleSelection + "';" +
+                            "setTimeout(() => window.close(), 200);" +
+                            "</script>"
             );
         } catch (Exception e) {
             logger.error("OAuth2 authentication error: {}", e.getMessage(), e);
             response.setContentType("text/html");
-            response.getWriter().write("<script>window.opener.location.href='http://localhost:5173/login?error=OAuth2+authentication+failed';setTimeout(() => window.close(), 200);</script>");
+            response.getWriter().write("<script>window.opener.location.href='        config.addAllowedOrigin(\"https://assessmatefinal-6cog.vercel.app\");\r\n" + //
+                    "/login?error=OAuth2+authentication+failed';setTimeout(() => window.close(), 200);</script>");
         }
     }
 
@@ -225,8 +231,8 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!user.getRoles().isEmpty()) {
-            logger.warn("User {} already has roles: {}", username, 
-                       user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+            logger.warn("User {} already has roles: {}", username,
+                    user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
             return ResponseEntity.badRequest().body(new MessageResponse("User already has a role assigned"));
         }
 
